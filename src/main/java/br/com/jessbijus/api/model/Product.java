@@ -54,6 +54,12 @@ public class Product {
     @Column(length = 40)
     private String badge;
 
+    @jakarta.persistence.ElementCollection
+    @jakarta.persistence.CollectionTable(name = "product_subcategories", joinColumns = @JoinColumn(name = "product_id"))
+    @jakarta.persistence.OrderColumn(name = "position")
+    @Column(name = "name", nullable = false, length = 100)
+    private java.util.List<String> subcategories = new java.util.ArrayList<>();
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

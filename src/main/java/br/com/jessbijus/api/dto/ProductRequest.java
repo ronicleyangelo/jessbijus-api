@@ -19,7 +19,8 @@ public record ProductRequest(
         Boolean active,
         Boolean bestSeller,
         @jakarta.validation.constraints.Pattern(regexp = "MAIS VENDIDO|PEÇA ÚNICA|NOVO") String badge,
-        @NotNull List<@Valid ImageRequest> images
+        @NotNull List<@Valid ImageRequest> images,
+        List<@NotBlank @Size(max = 100) String> subcategories
 ) {
     public record ImageRequest(
             @NotBlank String url,

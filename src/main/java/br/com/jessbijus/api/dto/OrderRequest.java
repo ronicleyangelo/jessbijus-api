@@ -12,7 +12,7 @@ import java.util.UUID;
 public record OrderRequest(
         @NotBlank @Size(max = 120) String customerName,
         @Size(max = 40) String contact,
-        @NotEmpty List<@Valid ItemRequest> items
+        @NotEmpty @Size(max = 100) List<@NotNull @Valid ItemRequest> items
 ) {
     public record ItemRequest(@NotNull UUID productId, @Min(1) int quantity) {}
 }

@@ -8,7 +8,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,11 +18,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = {HealthController.class, CsrfController.class})
 @Import(SecurityConfig.class)
-@TestPropertySource(properties = {
-        "JESSBIJUS_ADMIN_USERNAME=test-admin",
-        "JESSBIJUS_ADMIN_PASSWORD_HASH={bcrypt}test-only"
-})
 class SecurityConfigTest {
+    @MockitoBean AdminUserRepository users;
+    @MockitoBean UserDetailsService userDetailsService;
     @Autowired MockMvc mvc;
 
     @Test void healthIsPublic() throws Exception {

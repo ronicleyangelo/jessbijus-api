@@ -1,9 +1,13 @@
-# Jessbijus API
+﻿# Jessbijus API
 
-API Spring Boot 4.1.2 e Java 21 para a loja Jessbijus. Persistência PostgreSQL no Neon.
+API Spring Boot com PostgreSQL. Configure `NEON_JDBC_URL`, `NEON_DB_USER` e `NEON_DB_PASSWORD` no ambiente do processo.
 
-Configure as variáveis de `.env.example` no ambiente do processo. O arquivo é apenas um modelo; não coloque credenciais reais no Git. Para gerar a senha administrativa, siga [SECURITY.md](SECURITY.md).
+Para desenvolvimento HTTP local, configure também `SESSION_COOKIE_SECURE=false`. Em produção o padrão exige HTTPS.
 
-No Windows, com Java 21 em `JAVA_HOME`, execute `./mvnw.cmd spring-boot:run`. A API fica em `http://localhost:8080/jessbijus/api` por padrão. O frontend Angular usa um proxy local para essa porta.
+Antes de acessar o painel pela primeira vez, execute `AdminBootstrap` no IntelliJ ou gere o JAR com `.\mvnw.cmd package` e execute:
 
-As rotas de catálogo e envio de pedidos são públicas. `/api/admin/**` exige `ROLE_ADMIN`.
+```powershell
+java -jar .\target\backend-0.0.1-SNAPSHOT.jar --bootstrap-admin
+```
+
+Depois inicie `JessbijusApiApplication` normalmente. Veja [SECURITY.md](SECURITY.md) para configuração, migrações, sessões e troca de senha.

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class OrderServiceTest {
     private final UUID productId = UUID.randomUUID();
     private final Product product = new Product(productId, UUID.randomUUID(), "Brinco pérolas", null,
-            new BigDecimal("39.90"), 3, true, false, null, List.of(), null, null);
+            new BigDecimal("39.90"), 3, true, false, null, List.of(), null, null, List.of());
     private final ProductPort products = new ProductPort() {
         public List<Product> findAll(boolean activeOnly) { return List.of(product); }
         public Optional<Product> findById(UUID id) { return id.equals(productId) ? Optional.of(product) : Optional.empty(); }

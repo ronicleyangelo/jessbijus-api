@@ -15,14 +15,14 @@ public class ProfileService implements ProfileUseCase {
     private final ProfilePort profiles;
 
     @Transactional(readOnly = true)
-    public AdminProfile get() {
-        return profiles.findCurrent().orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+    public AdminProfile get(String subject) {
+        return profiles.findBySubject(subject).orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
     }
 
     @Transactional
-    public AdminProfile save(ProfileInput input) {
-        var current = profiles.findCurrent();
-        return profiles.save(new AdminProfile(current.map(AdminProfile::id).orElse(null),
+    public AdminProfile save(String subject, ProfileInput input) {
+        var current = profiles.findBySubject(subject);
+        return profiles.save(subject, new AdminProfile(current.map(AdminProfile::id).orElse(null),
                 input.fullName().trim(), input.nickname(), input.photoUrl(), null));
     }
 }

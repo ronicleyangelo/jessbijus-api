@@ -17,7 +17,7 @@ public record Product(
         String badge,
         List<ProductImage> images,
         Instant createdAt,
-        Instant updatedAt
+        Instant updatedAt, List<String> subcategories
 ) {
     public Product {
         images = List.copyOf(images);

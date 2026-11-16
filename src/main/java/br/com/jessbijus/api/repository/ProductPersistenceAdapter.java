@@ -40,6 +40,8 @@ class ProductPersistenceAdapter implements ProductPort {
         entity.setStockQuantity(product.stockQuantity());
         entity.setActive(product.active());
         entity.setBestSeller(product.bestSeller());
+        entity.getSubcategories().clear();
+        entity.getSubcategories().addAll(product.subcategories());
         entity.setBadge(product.badge());
         entity = productJpaRepository.saveAndFlush(entity);
 
@@ -58,6 +60,6 @@ class ProductPersistenceAdapter implements ProductPort {
                 .toList();
         return new Product(entity.getId(), entity.getCategory().getId(), entity.getName(), entity.getDescription(),
                 entity.getPrice(), entity.getStockQuantity(), entity.isActive(), entity.isBestSeller(), entity.getBadge(), mappedImages,
-                entity.getCreatedAt(), entity.getUpdatedAt());
+                entity.getCreatedAt(), entity.getUpdatedAt(), List.copyOf(entity.getSubcategories()));
     }
 }

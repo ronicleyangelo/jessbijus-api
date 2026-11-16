@@ -4,6 +4,8 @@ import br.com.jessbijus.api.domain.AdminProfile;
 import br.com.jessbijus.api.domain.ProfileInput;
 import br.com.jessbijus.api.dto.ProfileRequest;
 import br.com.jessbijus.api.port.ProfileUseCase;
+import br.com.jessbijus.api.security.AdminPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +21,12 @@ public class ProfileController {
     private final ProfileUseCase profiles;
 
     @GetMapping
-    public AdminProfile get() { return profiles.get(); }
+    public AdminProfile get(@AuthenticationPrincipal AdminPrincipal principal) {
+        return profiles.get(principal.id().toString());
+    }
 
     @PutMapping
-    public AdminProfile save(@Valid @RequestBody ProfileRequest request) {
-        return profiles.save(new ProfileInput(request.fullName(), request.nickname(), request.photoUrl()));
+    public AdminProfile save(@AuthenticationPrincipal AdminPrincipal principal, @Valid @RequestBody ProfileRequest request) {
+        return profiles.save(principal.id().toString(), new ProfileInput(request.fullName(), request.nickname(), request.photoUrl()));
     }
 }

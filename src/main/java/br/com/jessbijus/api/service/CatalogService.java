@@ -57,6 +57,8 @@ public class CatalogService implements CatalogUseCase {
         boolean bestSeller = "MAIS VENDIDO".equals(input.badge()) || (input.badge() == null && input.bestSeller());
         return products.save(new Product(id, category.id(), input.name().trim(), input.description(),
                 input.price(), input.stockQuantity(), input.active(), bestSeller, input.badge(), input.images(),
-                previous == null ? null : previous.createdAt(), null));
+                previous == null ? null : previous.createdAt(), null, input.subcategories() == null
+                        ? (previous == null ? List.of() : previous.subcategories())
+                        : input.subcategories().stream().map(String::trim).distinct().toList()));
     }
 }

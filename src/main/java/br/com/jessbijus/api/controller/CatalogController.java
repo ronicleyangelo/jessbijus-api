@@ -72,6 +72,6 @@ public class CatalogController {
                 null, image.url(), image.altText(), image.displayOrder(), image.type() == null ? "image" : image.type())).toList();
         return catalog.saveProduct(id, new ProductInput(request.categoryId(), request.name(), request.description(),
                 request.price(), request.stockQuantity(), request.active() == null || request.active(),
-                request.bestSeller() != null && request.bestSeller(), request.badge(), images));
+                request.bestSeller() != null && request.bestSeller(), request.badge(), images, request.subcategories()));
     }
 }
